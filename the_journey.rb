@@ -20,11 +20,13 @@ end
 
 class Traveller
   attr_reader :name, :gold, :inventory
+  attr_accessor :stoned
 
   def initialize(name, gold = 0)
      @name = name
      @gold = gold
      @inventory = {}
+     @stoned = false
   end
 
   def coin_purse
@@ -37,10 +39,12 @@ class Traveller
   end
 
   def purchase(tinker, item)
+    x = tinker.inventory[:items]
     if gold <= 0
       "You haven't got the coin lad"
+    elsif x.include?(item) == false
+      "I'm afraid I'm fresh out"
     else
-      x = tinker.inventory[:items]
       x.delete(item)
       inventory[:items] = item
       pay_the_tinker(tinker)
@@ -59,5 +63,10 @@ class Traveller
         one[index] != two[index]
       end
     end
+  end
+
+  def quest_two(num)
+    @gold += 1
+    (0..num).reduce(:+)**2
   end
 end

@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative 'the_journey.rb'
+require_relative '../mythical-creatures/medusa.rb'
+require 'pry'
 
 class JourneyTest < Minitest::Test
 
@@ -91,6 +93,7 @@ class JourneyTest < Minitest::Test
 
     traveller.purchase(tinker, "mirror")
     assert traveller.inventory.has_value?('mirror')
+
     refute tinker.inventory.has_value?('mirror')
     assert_equal 0, traveller.coin_purse
   end
@@ -108,32 +111,34 @@ class JourneyTest < Minitest::Test
 
   def test_things_start_to_get_interesting
 
-    traveller = Traveller.new("")
+    traveller = Traveller.new("S")
     medusa = Medusa.new("Cassiopeia")
+    assert traveller.name.length != 0
 
     medusa.stare(traveller)
     assert_equal 1, medusa.statues.count
-    #another assert equals perhaps on object id of some sort
-    #tinker named Draganovic for the dragon saving with frodo
-    #Horace for something
-    #josh cheek wizard
+    assert_equal traveller.object_id, medusa.statues[0].object_id
   end
 
   def test_traveller_is_safe_if_he_has_a_mirror
-    skip
-    tinker = Tinker.new("Adelaide")
-    traveller = Traveller.new("")
-    medusa = Medusa.new("Cassiopeia")
 
+    tinker = Tinker.new("Adelaide")
+    traveller = Traveller.new("S")
+    medusa = Medusa.new("Cassiopeia")
+    assert traveller.name.length != 0
+
+    traveller.quest('AB', 'CD')
+    traveller.purchase(tinker, "mirror")
     #insert code here to give your traveller a mirror
+    #make sure your medusa tests still pass!
     medusa.stare(traveller)
     assert_equal 0, medusa.statues.count
   end
 
   def test_the_tinker_only_has_one_mirror
-    skip
+
     tinker = Tinker.new("Guinevere")
-    traveller = Traveller.new("")
+    traveller = Traveller.new("S")
     traveller_companion = Traveller.new("Spindleshanks")
 
     assert_equal 225, traveller.quest_two(5)
@@ -141,19 +146,19 @@ class JourneyTest < Minitest::Test
     assert_equal 3025, traveller_companion.quest_two(10)
     assert_equal 1, traveller_companion.coin_purse
 
-    traveller.purchase("mirror")
-    assert_equal "I'm afraid I'm fresh out lad, however would you like some garlic?" #prompt yes/no
+    traveller.purchase(tinker, "mirror")
+
+    assert_equal "I'm afraid I'm fresh out", traveller_companion.purchase(tinker, "mirror")
   end
 
   def test_the_wizard_comes_to_your_aid
-    skip
     traveller = Traveller.new("")
     traveller_companion = Traveller.new("Spindleshanks")
 
     #write code to give your traveller a mirror
     #write code to have medusa stare at both of your travellers
 
-    assert_equal "Deborah", medusa.statues.first.name
+    assert_equal "Spindleshanks", medusa.statues.first.name
 
     #just when you thought you were doomed, without hope, engulfed by despair... yeah, yeah I think you get it, the wizard cheek makes an appearence!
 
@@ -163,7 +168,7 @@ class JourneyTest < Minitest::Test
     to believe in yourself, you can totally do it!
 
     *cue epic montage*
-    -Bam! you now have a new power - ~unstone~ -
+    -Bam! you now have a new power - ~power of vim~ -
 
     Hey, if we got time later, let's draw some stuff in the browser.
     The browser? you say... say what time period is this, whoops...
@@ -172,7 +177,7 @@ class JourneyTest < Minitest::Test
 
     traveller.power_of_vim
     assert_equal 0, medusa.statues.count
-    #"oh and before I forget, take this with you", said the wizard
+    #"oh and before I forget, take this with you", says the wizard
     items = {:magic_items => "wolfsbane"}
     assert_equal items, traveller.inventory
   end
@@ -203,6 +208,7 @@ class JourneyTest < Minitest::Test
     traveller = Traveller.new("")
     traveller_companion = Traveller.new("Deborah")
     werewolf = Werewolf.new("Horace", "The Black Forest")
+    assert traveller.name.length != 0
 
     assert_equal nil, werewolf.inventory
     assert_equal "What is that!? Is that wolfsbane!? Are you trying to kill me?", traveller.give_item("wolfsbane")
@@ -217,18 +223,18 @@ class JourneyTest < Minitest::Test
     sphinx = Sphinx.new("Erenna")
     assert_equal "Erenna", sphinx.name
 
-    #I sense a soul in search of answers. You wish to know how to cure the werewolf of his malady. I have the answer, but first you must complete my quest. - sphinx
+    #I sense a soul in search of answers. You wish to know how to cure the werewolf of his malady. I have the answer, but first you must complete my challange. - sphinx
 
-    assert_equal 'I', traveller.sphinx_quest(1)
-    assert_equal 'II', traveller.sphinx_quest(2)
-    assert_equal 'III', traveller.sphinx_quest(3)
-    assert_equal 'IV', traveller.sphinx_quest(4)
-    assert_equal 'V', traveller.sphinx_quest(5)
-    assert_equal 'VI', traveller.sphinx_quest(6)
-    assert_equal 'IX', traveller.sphinx_quest(9)
-    assert_equal 'XXVII', traveller.sphinx_quest(27)
-    assert_equal 'XLVIII', traveller.sphinx_quest(48)
-    assert_equal 'LIX', traveller.sphinx_quest(59)
+    assert_equal 'I', traveller.sphinx_challange(1)
+    assert_equal 'II', traveller.sphinx_challange(2)
+    assert_equal 'III', traveller.sphinx_challange(3)
+    assert_equal 'IV', traveller.sphinx_challange(4)
+    assert_equal 'V', traveller.sphinx_challange(5)
+    assert_equal 'VI', traveller.sphinx_challange(6)
+    assert_equal 'IX', traveller.sphinx_challange(9)
+    assert_equal 'XXVII', traveller.sphinx_challange(27)
+    assert_equal 'XLVIII', traveller.sphinx_challange(48)
+    assert_equal 'LIX', traveller.sphinx_challange(59)
 
     #You are a mighty traveller whose wisdom is beyond bounds! Here is your reward!
     items = {:magical_items => "wolfsbane", :items => "pizza"}
@@ -259,6 +265,7 @@ class JourneyTest < Minitest::Test
   def test_completion
     skip
     traveller = Traveller.new("")
+    assert traveller.name.length != 0
     assert_equal 'You rock', traveller.finale
   end
 end
