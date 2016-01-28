@@ -38,6 +38,10 @@ class Traveller
     tinker.bank += 1
   end
 
+  def quest_items(items)
+    inventory[:magic_items] = items
+  end
+
   def purchase(tinker, item)
     x = tinker.inventory[:items]
     if gold <= 0
@@ -65,8 +69,78 @@ class Traveller
     end
   end
 
+  def power_of_vim(medusa)
+    medusa.unstoned << medusa.statues.shift
+    medusa.unstoned[0].stoned = false
+  end
+
   def quest_two(num)
     @gold += 1
     (0..num).reduce(:+)**2
   end
+
+  def bitten?
+  end
+
+  def give_item(item)
+    werewolf = Werewolf.new("Horace", "The Black Forest")
+    werewolf.response
+  end
+end
+
+class Sphinx
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+
+  def sphinx_challenge(num)
+    key = {1000 => 'M',
+      900 => 'CM',
+       500 => 'D',
+        400 => 'CD',
+         100 => "C",
+          90 => "XC",
+           50 => "L",
+            40 => "XL",
+             10 => "X",
+              9 => "IX",
+               5 => "V",
+                4 => "IV",
+                 1 => "I"}
+    numeral = ''
+    key.each do |arabic, roman_numeral|
+      while num >= arabic
+        num = num -= arabic
+        numeral << roman_numeral
+      end
+    end
+    numeral
+  end
+
+  def roman_numeral(num)
+    key = {1000 => 'M',
+      900 => 'CM',
+       500 => 'D',
+        400 => 'CD',
+         100 => "C",
+          90 => "XC",
+           50 => "L",
+            40 => "XL",
+             10 => "X",
+              9 => "IX",
+               5 => "V",
+                4 => "IV",
+                 1 => "I"}
+    numeral = ''
+    key.each do |arabic, roman_numeral|
+      while num >= arabic
+        num = num -= arabic
+        numeral << roman_numeral
+      end
+    end
+    numeral
+  end
+
 end
