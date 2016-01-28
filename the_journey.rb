@@ -82,9 +82,12 @@ class Traveller
   def bitten?
   end
 
-  def give_item(item)
-    werewolf = Werewolf.new("Horace", "The Black Forest")
-    werewolf.response
+  def give_item(werewolf, item)
+    werewolf.response(item)
+  end
+
+  def finale
+    "I rock"
   end
 end
 

@@ -221,8 +221,9 @@ class JourneyTest < Minitest::Test
     werewolf = Werewolf.new("Horace", "The Black Forest")
     assert traveller.name.length != 0
 
-    assert_equal Hash.new, werewolf.inventory
-    assert_equal "What is that!? Is that wolfsbane!? Are you trying to kill me?", traveller.give_item("wolfsbane")
+    werewolf_items = {:items => "climbing shoes"}
+    assert_equal werewolf_items, werewolf.inventory
+    assert_equal "What is that!? Is that wolfsbane!? Are you trying to kill me?", traveller.give_item(werewolf, "wolfsbane")
     #have this quote come from the werewolf class
   end
 
@@ -266,27 +267,27 @@ class JourneyTest < Minitest::Test
   end
 
   def test_curing_the_werewolf
-    skip
+
     traveller = Traveller.new("")
     werewolf = Werewolf.new("Horace", "The Black Forest")
 
-    assert_equal Hash.new, werewolf.inventory
-    assert_equal "I thought the daft malevolent transformations would never end! Thank you kind traveller!", traveller.give_item("wolfsbane","pizza")
+    werewolf_items = {:items => "climbing shoes"}
+    assert_equal werewolf_items, werewolf.inventory
+    assert_equal "I thought the daft malevolent transformations would never end! Thank you kind traveller!", traveller.give_item(werewolf, ["wolfsbane","pizza"])
     #have the words come from the werewolf class
-    items = {:magic_items => ["wolfsbane", "pizza"]}
+    items = {:items => "climbing shoes", :magic_items => ["wolfsbane", "pizza"]}
     assert_equal items, werewolf.inventory
-    assert_equal nil, traveller.inventory
 
-    werewolf.take_items
-    assert_equal nil, werewolf.inventory
-    assert werewolf.human
+    werewolf.use_items
+    assert_equal Hash.new, werewolf.inventory
+    assert werewolf.human?
     werewolf.change!
-    assert werewolf.human
+    assert werewolf.human?
+    #make sure your werewolf tests still work!
   end
 
   def test_completion
-    skip
-    traveller = Traveller.new("")
+    traveller = Traveller.new("S")
     assert traveller.name.length != 0
     assert_equal 'I rock', traveller.finale
   end
