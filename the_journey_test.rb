@@ -12,7 +12,9 @@ class JourneyTest < Minitest::Test
   def test_what_is_a_tinker
     skip
     tinker = Tinker.new("Sunny")
-    assert_equal "Hello traveller, what might you need? Some barley, some rope,or how about some mead. I'm a tinker, a travelling thinker, and if you know what's best you shall pay me some heed. Here is my cart, its depths are beyond measure, and for a piece of gold you will get what you need!",
+    assert_equal "Hello traveller, what might you need? Some barley, some rope,or how about some mead. 
+    I'm a tinker, a travelling thinker, and if you know what's best you shall pay me some heed. 
+    Here is my cart, its depths are beyond measure, and for a piece of gold you will get what you need!",
     tinker.greeting
   end
 
@@ -151,7 +153,8 @@ class JourneyTest < Minitest::Test
 
     assert_equal "Spindleshanks", medusa.statues.first.name
 
-    #just when you thought you were doomed, without hope, engulfed by despair... yeah, yeah I think you get it, the wizard cheek makes an appearence!
+    #just when you thought you were doomed, without hope, engulfed by despair... yeah, yeah I think you get it,
+    #the wizard cheek makes an appearence!
 
     wizard = Wizard.new("Cheek")
     assert_equal "Hello y'all, sup sup sup, so I know what you're thinking, old
@@ -177,7 +180,11 @@ class JourneyTest < Minitest::Test
     assert_equal items, traveller.inventory
   end
 
-    #You and your companion have now been travelling for 3 fortnights when you stumble upon a hidden entrance in the middle of a hollowed out willow tree. Your companion is a bit hesitant, but your curiosity wins out and you now find yourself going deeper and deeper into what appears to be a dungeon. You are about to turn around when a man in tattered clothes suddenly blocks the exit. "Who dares enter the lair of Horace!", he growls...
+    #You and your companion have now been travelling for 3 fortnights when you stumble upon 
+    #a hidden entrance in the middle of a hollowed out willow tree. Your companion is a bit hesitant, 
+    #but your curiosity wins out and you now find yourself going deeper and deeper into what appears 
+    #to be a dungeon. You are about to turn around when a man in tattered clothes suddenly blocks the exit.
+    #"Who dares enter the lair of Horace!", he growls...
 
   def test_encountering_a_werewolf
     skip
@@ -196,7 +203,8 @@ class JourneyTest < Minitest::Test
 
     #huh, what is going on? You keep on trying to bite me, yet there is no pain or bite marks?? - traveller
 
-    #growl, yarp, you... you have discovered my dark secret. I.. I am a werewolf with no teeth. It's a sad existance, please help me. - werewolf
+    #growl, yarp, you... you have discovered my dark secret. I.. I am a werewolf with no teeth. 
+    #It's a sad existance, please help me. - werewolf
 
   def test_give_the_werwolf_wolfsbane
     skip
@@ -211,7 +219,8 @@ class JourneyTest < Minitest::Test
     #have this quote come from the werewolf class
   end
 
-    # Your traveller in despair splits off from the companion, going deeper and deeper into uncharted and trecherous territory in search of answers...
+    # Your traveller in despair splits off from the companion, going deeper and deeper into 
+    #uncharted and trecherous territory in search of answers...
 
   def test_meeting_a_sphinx
     skip
@@ -219,7 +228,8 @@ class JourneyTest < Minitest::Test
     sphinx = Sphinx.new("Erenna")
     assert_equal "Erenna", sphinx.name
 
-    #I sense a soul in search of answers. You wish to know how to cure the werewolf of his malady. I have the answer, but first you must complete my challange. - sphinx
+    #I sense a soul in search of answers. You wish to know how to cure the werewolf of his malady. 
+    #I have the answer, but first you must complete my challange. - sphinx
 
     assert_equal 'I', sphinx.sphinx_challenge(1)
     assert_equal 'II', sphinx.sphinx_challenge(2)
@@ -257,7 +267,8 @@ class JourneyTest < Minitest::Test
 
     werewolf_items = {:items => "climbing shoes"}
     assert_equal werewolf_items, werewolf.inventory
-    assert_equal "I thought the daft malevolent transformations would never end! Thank you kind traveller!", traveller.give_item(werewolf, ["wolfsbane","pizza"])
+    assert_equal "I thought the daft malevolent transformations would never end! Thank you kind traveller!", 
+    traveller.give_item(werewolf, ["wolfsbane","pizza"])
     #have the words come from the werewolf class
     items = {:items => "climbing shoes", :magic_items => ["wolfsbane", "pizza"]}
     assert_equal items, werewolf.inventory
@@ -279,5 +290,5 @@ class JourneyTest < Minitest::Test
 end
 
 
-# [ ∆,
+# [ ∆,
 #  ∆,∆ ]
